@@ -1,10 +1,13 @@
 from flask import Flask
+from markupsafe import escape
+
 app = Flask(__name__)
 
 @app.route('/')
 
-def home():
-    return '¡Hola mundo Flask!'
+def index():
+    return 'Index Page'
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/about')
+def hello():
+    return 'Hola soy victoria y estudio ingenieria en desarrollo y gestion de software'
