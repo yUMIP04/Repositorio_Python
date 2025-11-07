@@ -47,13 +47,56 @@ def actualizar_stock(id, nuevo_stock):
         '''
         UPDATE productos SET stock = ?
         WHERE id = ? 
-        ''',(id, nuevo_stock)
+        ''',(nuevo_stock, id)
     )
     
     conexion.commit()
     print("Se hizo la actualizacion de manera correcta")
     
+def eliminar_producto(nombre):
+    cursor = conexion.cursor()
     
-agregar_producto("maruchan", 1.50, 300)
-ver_productos()
-actualizar_stock(1,200)
+    cursor.execute(
+        '''DELETE FROM productos WHERE nombre = ?''',(nombre,)
+    )
+    
+    conexion.commit()
+
+
+while True:
+    
+    print("--Bienvenido al menu de opciones--")
+    print("1. Agregar producto a la base de datos.")
+    print("2. Ver la tabla de base de datos.")
+    print("3. Actualizar el stock.")
+    print("4. Eliminar un producto.")
+    print("5. Salir.")
+    
+    option = input("Elige una de las opciones: ")
+    
+    match option:
+        
+        case "1":
+            nombre = input("Inserta el nombre: ")
+            precio = input("Inserta el precio: ")
+            stock = input("Inserta el stock: ")
+            agregar_producto(nombre, precio, stock)
+            
+        case "2":
+            ver_productos()
+            
+        case "3":
+            id = int(input("Inserta el id: "))
+            stock = int(input("Inserta el stock: "))
+            actualizar_stock(id, stock)
+            
+        case "4":
+            nombre= input("Inserta el nombre del producto: ")
+            eliminar_producto(nombre)
+            
+        case "5":
+            print("Saliendo del programa...")
+            break
+        
+        case _:
+            print("Elige una de las opciones que se te muestran.")
